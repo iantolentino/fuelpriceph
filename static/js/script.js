@@ -80,13 +80,15 @@ async function fetchPrices(forceRefresh = false) {
             updateUI();
             showLoading(false);
             return;
+        } else {
+            // If file doesn't exist yet, show loading message
+            dom.loading.querySelector('p').textContent = 'Waiting for first price update...';
+            setTimeout(() => fetchPrices(), 5000); // Try again in 5 seconds
         }
-        
-        showError('Could not load fuel prices');
         
     } catch (error) {
         console.error('Fetch error:', error);
-        showError('Cannot connect to server');
+        showError('Failed to load prices. Check GitHub Actions is running.');
     }
 }
 
