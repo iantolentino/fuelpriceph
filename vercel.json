@@ -1,13 +1,30 @@
 {
-  "rewrites": [
-    { "source": "/api/prices", "destination": "/data/fuel_prices.json" }
-  ],
-  "headers": [
+  "builds": [
     {
-      "source": "/data/(.*)",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
-      ]
+      "src": "static/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "data/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "templates/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/data/(.*)",
+      "dest": "/data/$1"
+    },
+    {
+      "src": "/",
+      "dest": "/templates/index.html"
     }
   ]
 }
