@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fuel fetcher · ph</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80' fill='white'>ffp</text></svg>">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>⛽ fuel fetcher <span class="dim">· ph</span></h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>fetching prices ...</p>
+        </div>
+        
+        <div id="error" class="error hidden"></div>
+
+        <div id="content" class="content hidden">
+            <div class="last-updated">
+                <span id="lastUpdated">—</span>
+                <span id="dataSource" class="source-badge">loading</span>
+            </div>
+
+            <div class="price-grid">
+                <div class="card premium">
+                    <div class="card-icon">⛽</div>
+                    <div class="card-label">premium</div>
+                    <div class="card-value" id="premiumPrice">₱0.00</div>
+                    <div class="card-unit">/ liter</div>
+                </div>
+                <div class="card unleaded">
+                    <div class="card-icon">🛢️</div>
+                    <div class="card-label">unleaded</div>
+                    <div class="card-value" id="unleadedPrice">₱0.00</div>
+                    <div class="card-unit">/ liter</div>
+                </div>
+            </div>
+
+            <div class="split">
+                <section class="calculator">
+                    <h2>⌨️ calculator</h2>
+                    <div class="input-group">
+                        <label for="fuelCapacity">fuel capacity</label>
+                        <input type="number" id="fuelCapacity" placeholder="0.0" min="0" step="0.1" value="0">
+                        <div class="unit-toggle">
+                            <button class="unit-btn active" data-unit="liters">liters</button>
+                            <button class="unit-btn" data-unit="gallons">gallons</button>
+                        </div>
+                    </div>
+
+                    <div class="results">
+                        <div class="result-item premium">
+                            <span class="result-label">premium</span>
+                            <span class="result-number" id="premiumCost">₱0.00</span>
+                        </div>
+                        <div class="result-item unleaded">
+                            <span class="result-label">unleaded</span>
+                            <span class="result-number" id="unleadedCost">₱0.00</span>
+                        </div>
+                        <div class="result-diff">
+                            <span class="diff-label" id="diffLabel">difference</span>
+                            <span class="diff-value" id="priceDifference">₱0.00</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="info">
+                    <h2>🏪 stations</h2>
+                    <div class="station-grid" id="stationPrices"></div>
+                    <p class="footnote">* data from zigwheels.ph · updated hourly</p>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>
+                <a href="#" id="refreshLink">↻ refresh</a>
+                · <a href="#" id="exportLink">⬇ csv</a>
+            </p>
+            <p class="dim small">data from zigwheels.ph · updated hourly</p>
+        </div>
+    </footer>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
