@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+*.log
+instance/
+*.db
+.DS_Store
+fuel_prices.json    # Optional: if you don't want to commit price files
