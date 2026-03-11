@@ -66,7 +66,7 @@ async function fetchPrices(forceRefresh = false) {
     showLoading(true);
     
     try {
-        const response = await fetch('/api/prices?_=' + Date.now());
+        const response = await fetch('/data/fuel_prices.json?_=' + Date.now());
         
         if (response.ok) {
             const data = await response.json();
