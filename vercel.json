@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/api/prices", "destination": "/data/fuel_prices.json" }
+  ],
+  "headers": [
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+      ]
+    }
+  ]
+}
