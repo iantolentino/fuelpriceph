@@ -67,15 +67,15 @@ async function fetchPrices(forceRefresh = false) {
     showLoading(true);
     
     try {
-        // Try the API endpoint first (more reliable)
-        const response = await fetch('/api/prices?_=' + Date.now());
+        // Only use the JSON file (works on Vercel)
+        const response = await fetch('/data/fuel_prices.json?_=' + Date.now());
         
         if (response.ok) {
             const data = await response.json();
             
             state.prices.premium = data.premium_ron95;
             state.prices.unleaded = data.regular_ron91;
-            state.prices.lastUpdated = data.last_update ? new Date(data.last_update) : new Date();
+            state.prices.lastUpdated = new Date(data.last_updated);
             state.prices.source = data.source || 'phfueltrack.com';
             state.prices.region = data.region || 'National Average';
             state.prices.brand_prices = data.brand_prices;
@@ -84,36 +84,19 @@ async function fetchPrices(forceRefresh = false) {
             updateUI();
             showLoading(false);
             return;
-        }
-        
-        // Fallback to JSON file if API fails
-        const fileResponse = await fetch('/data/fuel_prices.json?_=' + Date.now());
-        
-        if (fileResponse.ok) {
-            const data = await fileResponse.json();
-            
-            state.prices.premium = data.premium_ron95;
-            state.prices.unleaded = data.regular_ron91;
-            state.prices.lastUpdated = new Date(data.last_updated);
-            state.prices.source = data.source;
-            state.prices.region = data.region;
-            state.prices.brand_prices = data.brand_prices;
-            
-            generateStations();
-            updateUI();
-            showLoading(false);
-            return;
         } else {
             // If file doesn't exist yet, show loading message
-            dom.loading.querySelector('p').textContent = 'Waiting for first price update...';
-            setTimeout(() => fetchPrices(), 3000);
+            console.log('Waiting for first price update...');
+            dom.loading.querySelector('p').textContent = 'Waiting for first price update from GitHub Actions...';
+            setTimeout(() => fetchPrices(), 5000);
         }
         
     } catch (error) {
         console.error('Fetch error:', error);
-        showError('Failed to load prices. Please refresh the page.');
+        showError('Failed to load prices. GitHub Actions may still be setting up.');
     }
 }
+
 
 function generateStations() {
     if (!state.prices.premium || !state.prices.unleaded) return;
@@ -218,6 +201,12 @@ function updateUI() {
         dom.dataSource.textContent = state.prices.source || 'phfueltrack.com';
     }
     
+    // Add region info if available
+    const regionElement = document.getElementById('regionInfo');
+    if (regionElement && state.prices.region) {
+        regionElement.textContent = `📍 ${state.prices.region}`;
+    }
+    
     renderStations();
     calculateCosts();
 }
@@ -236,6 +225,7 @@ function renderStations() {
     
     dom.stationPrices.innerHTML = html;
 }
+
 
 function setUnit(unit) {
     if (unit === state.unit) return;
