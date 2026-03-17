@@ -5,11 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>fuel fetcher · ph</title>
     <link rel="stylesheet" href="/static/css/style.css">
-     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80' fill='white'>ffp</text></svg>">
-    <script>
-        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/insights/script.js"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='80' fill='white'>ffp</text></svg>">
+    <!-- Remove Vercel insights for local development -->
 </head>
 <body>
     <header class="header">
@@ -28,29 +25,22 @@
 
         <div id="content" class="content hidden">
             <div class="last-updated">
-                <p>last fetch, updates every 6 hrs </p>
+                <p>last fetch, updates every 3 hrs </p>
                 <span id="lastUpdated">—</span>
                 <span id="dataSource" class="source-badge">loading</span>
+                <span id="regionInfo" class="region-badge"></span>
             </div>
 
             <div class="price-grid">
                 <div class="card premium">
                     <div class="card-icon">⛽</div>
-<<<<<<< HEAD
                     <div class="card-label">premium (ron 95)</div>
-=======
-                    <div class="card-label">premium</div>
->>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
                     <div class="card-value" id="premiumPrice">₱0.00</div>
                     <div class="card-unit">/ liter</div>
                 </div>
                 <div class="card unleaded">
                     <div class="card-icon">🛢️</div>
-<<<<<<< HEAD
                     <div class="card-label">regular (ron 91)</div>
-=======
-                    <div class="card-label">unleaded</div>
->>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
                     <div class="card-value" id="unleadedPrice">₱0.00</div>
                     <div class="card-unit">/ liter</div>
                 </div>
@@ -70,11 +60,11 @@
 
                     <div class="results">
                         <div class="result-item premium">
-                            <span class="result-label">premium</span>
+                            <span class="result-label">premium (ron 95)</span>
                             <span class="result-number" id="premiumCost">₱0.00</span>
                         </div>
                         <div class="result-item unleaded">
-                            <span class="result-label">unleaded</span>
+                            <span class="result-label">regular (ron 91)</span>
                             <span class="result-number" id="unleadedCost">₱0.00</span>
                         </div>
                         <div class="result-diff">
@@ -87,7 +77,7 @@
                 <section class="info">
                     <h2>🏪 stations</h2>
                     <div class="station-grid" id="stationPrices"></div>
-                    <p class="footnote">* data from zigwheels.ph · updated hourly</p>
+                    <p class="footnote">* data from phfueltrack.com · updated hourly</p>
                 </section>
             </div>
         </div>
@@ -98,8 +88,9 @@
             <p>
                 <a href="#" id="refreshLink">↻ refresh</a>
                 · <a href="#" id="exportLink">⬇ csv</a>
+                · <a href="https://phfueltrack.com" target="_blank" rel="noopener">📊 source</a>
             </p>
-            <p class="dim small">data from zigwheels.ph · updated hourly</p>
+            <p class="dim small">real-time prices from phfueltrack.com · updated every 3 hours</p>
         </div>
     </footer>
 

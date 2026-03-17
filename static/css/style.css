@@ -71,6 +71,26 @@ h3 {
 .dim {
     opacity: 0.5;
 }
+/* Add to style.css */
+.region-badge {
+    display: inline-block;
+    font-size: 0.55rem;
+    padding: 0.1rem 0.3rem;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 2px;
+    margin-left: 0.3rem;
+    text-transform: uppercase;
+    opacity: 0.8;
+}
+
+.last-updated {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+}
 
 /* header / footer */
 .header {
