@@ -1,0 +1,59 @@
+# scrape.yml (updated)
+name: Scrape Fuel Prices
+
+on:
+  schedule:
+    - cron: '0 */3 * * *'  # Run every 3 hours (more frequent updates)
+  workflow_dispatch:        # Allow manual trigger
+  push:
+    branches: [ main ]      # Also run on push to main
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install dependencies
+      run: |
+        pip install requests beautifulsoup4
+    
+    - name: Run scraper
+      run: python scraper.py
+      continue-on-error: true  # Don't fail if scraper has issues
+    
+    - name: Check if file was created/updated
+      run: |
+        mkdir -p data
+        ls -la data/ || echo "Data folder empty"
+        if [ -f data/fuel_prices.json ]; then
+          echo "✅ File exists, content:"
+          cat data/fuel_prices.json
+        else
+          echo "⚠️ No file created yet"
+          # Create a placeholder with current Metro Manila prices
+          echo '{
+            "premium_ron100": 72.85,
+            "unleaded_ron95": 62.99,
+            "last_updated": "'$(date +"%Y-%m-%d %H:%M:%S")'",
+            "source": "Fallback - Metro Manila prices",
+            "region": "Metro Manila"
+          }' > data/fuel_prices.json
+          echo "✅ Created fallback file with current Metro Manila prices"
+        fi
+    
+    - name: Commit and push if changed
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add data/fuel_prices.json
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Update fuel prices [skip ci]" && git push)

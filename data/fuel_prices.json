@@ -1,0 +1,22 @@
+{
+  "premium_ron95": 72.85,
+  "regular_ron91": 68.45,
+  "last_updated": "2026-03-17 19:45:45",
+  "last_updated_display": "Mar 17, 07:29 PM",
+  "source": "phfueltrack.com (fallback)",
+  "region": "National Average",
+  "brand_prices": {
+    "petron_ron95": 73.25,
+    "shell_ron95": 72.6,
+    "caltex_ron95": 73.2,
+    "seaoil_ron95": 73.65,
+    "total_ron95": 73.45,
+    "cleanfuel_ron95": 73.4,
+    "petron_ron91": 68.75,
+    "shell_ron91": 68.1,
+    "caltex_ron91": 68.8,
+    "seaoil_ron91": 69.15,
+    "total_ron91": 69.05,
+    "cleanfuel_ron91": 68.9
+  }
+}
