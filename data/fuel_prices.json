@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "premium_ron95": 72.85,
   "regular_ron91": 68.45,
   "last_updated": "2026-03-17 19:45:45",
@@ -19,4 +20,10 @@
     "total_ron91": 69.05,
     "cleanfuel_ron91": 68.9
   }
+=======
+  "premium_ron100": 67.99,
+  "unleaded_ron95": 58.15,
+  "last_updated": "2026-03-17 06:58:15",
+  "source": "Zigwheels Philippines"
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
 }

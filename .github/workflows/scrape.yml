@@ -1,12 +1,20 @@
+<<<<<<< HEAD
 # scrape.yml (updated)
+=======
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
 name: Scrape Fuel Prices
 
 on:
   schedule:
+<<<<<<< HEAD
     - cron: '0 */3 * * *'  # Run every 3 hours (more frequent updates)
   workflow_dispatch:        # Allow manual trigger
   push:
     branches: [ main ]      # Also run on push to main
+=======
+    - cron: '0 */6 * * *'  # Run every 6 hours
+  workflow_dispatch:        # Allow manual trigger
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
 
 jobs:
   scrape:
@@ -29,6 +37,7 @@ jobs:
     
     - name: Run scraper
       run: python scraper.py
+<<<<<<< HEAD
       continue-on-error: true  # Don't fail if scraper has issues
     
     - name: Check if file was created/updated
@@ -50,10 +59,21 @@ jobs:
           }' > data/fuel_prices.json
           echo "✅ Created fallback file with current Metro Manila prices"
         fi
+=======
+    
+    - name: Check if file was created
+      run: |
+        ls -la data/ || echo "Data folder not found"
+        cat data/fuel_prices.json || echo "No JSON file"
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
     
     - name: Commit and push if changed
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add data/fuel_prices.json
+<<<<<<< HEAD
         git diff --quiet && git diff --staged --quiet || (git commit -m "Update fuel prices [skip ci]" && git push)
+=======
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Update fuel prices [skip ci]" && git push)
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958

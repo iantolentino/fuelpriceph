@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 # scraper.py (updated for phfueltrack.com)
+=======
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -7,6 +10,7 @@ import json
 import os
 
 def fetch_fuel_prices():
+<<<<<<< HEAD
     """Fetch prices from phfueltrack.com"""
     url = "https://phfueltrack.com/"
     
@@ -238,6 +242,46 @@ def fetch_fuel_prices():
 
 def save_prices(prices):
     """Save prices to JSON file"""
+=======
+    """Fetch prices from Zigwheels"""
+    url = "https://www.zigwheels.ph/fuel-price"
+    
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+    }
+    
+    try:
+        print("Fetching from Zigwheels...")
+        response = requests.get(url, headers=headers, timeout=10)
+        response.raise_for_status()
+        
+        soup = BeautifulSoup(response.text, 'html.parser')
+        text = soup.get_text()
+        
+        # Look for RON 100 and RON 95
+        ron100_match = re.search(r'RON\s*100[^\d]*?(\d+\.?\d*)', text, re.IGNORECASE)
+        ron95_match = re.search(r'RON\s*95[^\d]*?(\d+\.?\d*)', text, re.IGNORECASE)
+        
+        if ron100_match and ron95_match:
+            prices = {
+                'premium_ron100': float(ron100_match.group(1)),
+                'unleaded_ron95': float(ron95_match.group(1)),
+                'last_updated': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+                'source': 'Zigwheels Philippines'
+            }
+            print(f"Found: RON 100 = ₱{prices['premium_ron100']}, RON 95 = ₱{prices['unleaded_ron95']}")
+            return prices
+        
+        print("Could not find prices in the page")
+        return None
+        
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
+def save_prices(prices):
+    """Save prices to JSON file in the data folder"""
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
     if not prices:
         print("No prices to save")
         return False
@@ -254,26 +298,44 @@ def save_prices(prices):
     with open(json_path, 'w', encoding='utf-8') as f:
         json.dump(prices, f, indent=2, ensure_ascii=False)
     
+<<<<<<< HEAD
     print(f"\n✅ Saved to {json_path}")
     print(f"📊 Data: Premium RON 95: ₱{prices['premium_ron95']} | Regular RON 91: ₱{prices['regular_ron91']}")
     print(f"🕐 Updated: {prices['last_updated']}")
+=======
+    print(f"✅ Saved to {json_path}")
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
     
     # Also print the file content for verification
     with open(json_path, 'r') as f:
         content = f.read()
+<<<<<<< HEAD
         print(f"\n📄 File content preview: {content[:200]}...")
+=======
+        print(f"File content: {content}")
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
     
     return True
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     print("\n" + "="*60)
     print("FUEL PRICE SCRAPER - PHILIPPINES (phfueltrack.com)")
     print("="*60)
+=======
+    print("\n" + "="*50)
+    print("FUEL PRICE SCRAPER")
+    print("="*50)
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
     
     prices = fetch_fuel_prices()
     if prices:
         save_prices(prices)
         print("\n✅ Scraper completed successfully")
     else:
+<<<<<<< HEAD
         print("\n❌ Scraper failed - no prices found")
     
+=======
+        print("\n❌ Scraper failed")
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958

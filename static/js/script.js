@@ -66,12 +66,17 @@ async function fetchPrices(forceRefresh = false) {
     showLoading(true);
     
     try {
+<<<<<<< HEAD
         // Try the API endpoint first (more reliable)
         const response = await fetch('/api/prices?_=' + Date.now());
+=======
+        const response = await fetch('/data/fuel_prices.json?_=' + Date.now());
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
         
         if (response.ok) {
             const data = await response.json();
             
+<<<<<<< HEAD
             state.prices.premium = data.premium_ron95;
             state.prices.unleaded = data.regular_ron91;
             state.prices.lastUpdated = data.last_update ? new Date(data.last_update) : new Date();
@@ -97,12 +102,19 @@ async function fetchPrices(forceRefresh = false) {
             state.prices.source = data.source;
             state.prices.region = data.region;
             state.prices.brand_prices = data.brand_prices;
+=======
+            state.prices.premium = data.premium_ron100;
+            state.prices.unleaded = data.unleaded_ron95;
+            state.prices.lastUpdated = new Date(data.last_updated);
+            state.prices.source = data.source;
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
             
             generateStations();
             updateUI();
             showLoading(false);
             return;
         } else {
+<<<<<<< HEAD
             // If both fail, show appropriate message
             if (fileResponse.status === 404) {
                 console.log('Waiting for first price update...');
@@ -111,10 +123,16 @@ async function fetchPrices(forceRefresh = false) {
             } else {
                 throw new Error(`HTTP error! status: ${fileResponse.status}`);
             }
+=======
+            // If file doesn't exist yet, show loading message
+            dom.loading.querySelector('p').textContent = 'Waiting for first price update...';
+            setTimeout(() => fetchPrices(), 5000); // Try again in 5 seconds
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
         }
         
     } catch (error) {
         console.error('Fetch error:', error);
+<<<<<<< HEAD
         showError('Failed to load prices. Make sure the server is running.');
     }
 }
@@ -204,6 +222,40 @@ function generateStations() {
         });
     }
 }
+=======
+        showError('Failed to load prices. Check GitHub Actions is running.');
+    }
+}
+
+function generateStations() {
+    if (!state.prices.premium || !state.prices.unleaded) return;
+    
+    const stations = [
+        { name: 'Petron', premiumName: 'Blaze 100', unleadedName: 'XCS' },
+        { name: 'Shell', premiumName: 'V-Power', unleadedName: 'FuelSave' },
+        { name: 'Caltex', premiumName: 'Platinum', unleadedName: 'Silver' },
+        { name: 'Total', premiumName: 'Excellium', unleadedName: 'Regular' }
+    ];
+    
+    const regions = ['Metro Manila', 'Luzon', 'Visayas', 'Mindanao'];
+    
+    state.prices.stations = stations.map(station => {
+        const region = regions[Math.floor(Math.random() * regions.length)];
+        const premiumOffset = (Math.random() * 0.6 - 0.3);
+        const unleadedOffset = (Math.random() * 0.6 - 0.3);
+        
+        return {
+            name: station.name,
+            premiumName: station.premiumName,
+            unleadedName: station.unleadedName,
+            region: region,
+            premium: Math.round((state.prices.premium + premiumOffset) * 100) / 100,
+            unleaded: Math.round((state.prices.unleaded + unleadedOffset) * 100) / 100
+        };
+    });
+}
+
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
 function updateUI() {
     if (!state.prices.premium || !state.prices.unleaded) return;
     
@@ -212,6 +264,7 @@ function updateUI() {
     
     if (state.prices.lastUpdated) {
         const formatted = state.prices.lastUpdated.toLocaleString('en-PH', {
+<<<<<<< HEAD
             hour: '2-digit', 
             minute: '2-digit',
             day: '2-digit', 
@@ -220,11 +273,19 @@ function updateUI() {
         });
         dom.lastUpdated.innerHTML = `⌛ ${formatted}`;
         dom.dataSource.textContent = state.prices.source || 'phfueltrack.com';
+=======
+            hour: '2-digit', minute: '2-digit',
+            day: '2-digit', month: '2-digit'
+        });
+        dom.lastUpdated.innerHTML = `⌛ ${formatted}`;
+        dom.dataSource.textContent = state.prices.source || 'Zigwheels';
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
     }
     
     renderStations();
     calculateCosts();
 }
+<<<<<<< HEAD
 function createRegionElement() {
     const element = document.createElement('div');
     element.id = 'regionInfo';
@@ -232,6 +293,8 @@ function createRegionElement() {
     document.querySelector('.last-updated').appendChild(element);
     return element;
 }
+=======
+>>>>>>> 02c37ea6322d2b0eba9d024b47d8554d5b7f8958
 
 function renderStations() {
     if (!dom.stationPrices || !state.prices.stations) return;
